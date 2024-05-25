@@ -57,7 +57,7 @@ public class Main {
 //            // Espera a que la página de inicio cargue después del inicio de sesión
 //            wait.until(ExpectedConditions.presenceOfElementLocated(By.tagName("html")));
 //            Thread.sleep(5000);
-//
+
 //            // Navega a la nueva URL dentro del mismo sitio
 //            driver.get("https://creditoautobo.mx.corp/tekfinauto/tekorigination//CustomerASPx/wbCustomerCenterResumeBPM.aspx?PersonId=@1&cntPrmA=X318428&cntPrmB=5&iOpReference=0&iIdReference=0&customerCode=&searchCriteria=&path=&impoundIdOperation=0");
 //
