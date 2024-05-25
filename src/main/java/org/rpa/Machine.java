@@ -29,26 +29,52 @@ public class Machine {
             e.printStackTrace();
         }
     }
-    public void downloadSpreadSheet() throws InterruptedException {
-        bot.keyPress(KeyEvent.VK_WINDOWS);
-        bot.keyRelease(KeyEvent.VK_WINDOWS);
-        Thread.sleep(1000);
+    public void downloadSpreadSheet() throws Exception {
+        // Hace clic en la celda inicial (X: 165, Y: 365)
+        clickAtCoordinates(165, 365);
 
-        textEntry("CHROME");
-        Thread.sleep(1000);
+        while (true) {
+            // Lee celda 1
+            String folio = getCellValue();
+            // Presiona Escape
+            bot.keyPress(KeyEvent.VK_ESCAPE);
+            bot.keyRelease(KeyEvent.VK_ESCAPE);
 
-        bot.keyPress(KeyEvent.VK_ENTER);
-        bot.keyRelease(KeyEvent.VK_ENTER);
-        Thread.sleep(4000);
+            // Mueve a la derecha
+            bot.keyPress(KeyEvent.VK_RIGHT);
+            bot.keyRelease(KeyEvent.VK_RIGHT);
 
-        textEntry("https://santandernet-my.sharepoint.com/:x:/r/personal/z285685_santander_com_mx/Documents/BASE%20ASIGNACION%20DPS/BASE%20ASIGNACION%20NUEVA.xlsx?d=wdcc242eed7824f1690adfcc776c4903d&csf=1&web=1&e=2ozWuy");
-        Thread.sleep(1000);
-        bot.keyPress(KeyEvent.VK_ENTER);
-        bot.keyRelease(KeyEvent.VK_ENTER);
-        Thread.sleep(15500);
+            // Lee celda 2
+            String agencia = getCellValue();
 
+            // Guarda la fila
+            folios.add(new Folio(folio, agencia));
 
+            // Baja con Enter
+            bot.keyPress(KeyEvent.VK_ENTER);
+            bot.keyRelease(KeyEvent.VK_ENTER);
 
+            // Lee celda 2
+            agencia = getCellValue();
+            // Mueve a la izquierda
+            bot.keyPress(KeyEvent.VK_LEFT);
+            bot.keyRelease(KeyEvent.VK_LEFT);
+
+            // Lee celda 1
+            folio = getCellValue();
+
+            // Verifica si ambas celdas están vacías o nulas
+            if (folio.isEmpty() || agencia.isEmpty()) {
+                break;
+            }
+
+            // Guarda la fila
+            folios.add(new Folio(folio, agencia));
+
+            // Baja con Enter
+            bot.keyPress(KeyEvent.VK_ENTER);
+            bot.keyRelease(KeyEvent.VK_ENTER);
+        }
     }
 
     public String getCellValue() throws AWTException, UnsupportedFlavorException, IOException, InterruptedException {

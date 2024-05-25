@@ -20,6 +20,24 @@ public class Folio {
         this.estatus = estatus;
     }
 
+    public Folio(String folio, String agencia) {
+        this.folio = folio;
+        this.agencia = agencia;
+        this.cliente = null;
+        this.estatus = null;
+    }
+
+    @Override
+    public String toString() {
+        return "RowData{" +
+                "folio='" + folio + '\'' +
+                ", agencia='" + agencia + '\'' +
+                ", cliente='" + cliente + '\'' +
+                ", estatus='" + estatus + '\'' +
+                '}';
+    }
+
+
     public String getFecha() {
         return fecha;
     }
