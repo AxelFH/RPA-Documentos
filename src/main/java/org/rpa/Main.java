@@ -30,6 +30,7 @@ public class Main {
 
             Machine bot = new Machine();
             bot.startBot();
+            bot.showFoliosModal();
 
 
 
