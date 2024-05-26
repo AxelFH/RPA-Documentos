@@ -3,9 +3,11 @@ package org.rpa;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -61,7 +63,7 @@ public class Machine {
 
         int times = 0;
 
-        while (times <= 12){
+        while (hasValue){
             value = getRowValues();
             if (value.isEmpty()){
                 hasValue = false;
@@ -84,7 +86,11 @@ public class Machine {
 
         String agencia = getCellValue();
 
-        folios.add(new Folio(folio, agencia));
+        if (!folio.isEmpty()){
+            folios.add(new Folio(folio, agencia));
+        }else{
+            System.out.println("No hay más folios");
+        }
 
         // Baja con Enter
         bot.keyPress(KeyEvent.VK_ESCAPE);
@@ -124,6 +130,10 @@ public class Machine {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Clipboard clipboard = toolkit.getSystemClipboard();
         String cellValue = (String) ((Clipboard) clipboard).getData(DataFlavor.stringFlavor);
+
+        StringSelection emptySelection = new StringSelection("");
+        clipboard.setContents(emptySelection, null);
+
 
         return cellValue;
     }
