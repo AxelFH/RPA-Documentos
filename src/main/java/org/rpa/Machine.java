@@ -74,33 +74,46 @@ public class Machine {
     }
 
     public String getRowValues() throws Exception{
-
-
         // Lee celda 1
         String folio = getCellValue();
-
         bot.keyPress(KeyEvent.VK_ESCAPE);
         bot.keyRelease(KeyEvent.VK_ESCAPE);
 
         pressKey(3, KeyEvent.VK_RIGHT);
-
         String agencia = getCellValue();
-
-        if (!folio.isEmpty()){
-            folios.add(new Folio(folio, agencia));
-        }else{
-            System.out.println("No hay más folios");
-        }
-
-        // Baja con Enter
         bot.keyPress(KeyEvent.VK_ESCAPE);
         bot.keyRelease(KeyEvent.VK_ESCAPE);
-        bot.keyPress(KeyEvent.VK_DOWN);
-        bot.keyRelease(KeyEvent.VK_DOWN);
 
-        pressKey(3, KeyEvent.VK_LEFT);
-        System.out.println(folio);
-        return folio;
+        pressKey(2, KeyEvent.VK_RIGHT);
+        String estatus = getCellValue();
+        bot.keyPress(KeyEvent.VK_ESCAPE);
+        bot.keyRelease(KeyEvent.VK_ESCAPE);
+
+        if (estatus.isEmpty() || estatus==""){
+            bot.keyPress(KeyEvent.VK_F2);
+            bot.keyRelease(KeyEvent.VK_F2);
+            textEntry("DPS");
+            Thread.sleep(1000);
+            bot.keyPress(KeyEvent.VK_DOWN);
+            bot.keyRelease(KeyEvent.VK_DOWN);
+            pressKey(5, KeyEvent.VK_LEFT);
+            if (!folio.isEmpty()){
+                folios.add(new Folio(folio, agencia, estatus));
+            }else{
+                System.out.println("No hay más folios");
+            }
+            return folio;
+        }else {
+            bot.keyPress(KeyEvent.VK_DOWN);
+            bot.keyRelease(KeyEvent.VK_DOWN);
+            pressKey(5, KeyEvent.VK_LEFT);
+            if (!folio.isEmpty()){
+                folios.add(new Folio(folio, agencia, estatus));
+            }else{
+                System.out.println("No hay más folios");
+            }
+            return folio;
+        }
     }
 
 
@@ -125,7 +138,6 @@ public class Machine {
         bot.keyRelease(KeyEvent.VK_CONTROL);
         Thread.sleep(1000);
 
-
         // Obtiene el contenido del portapapeles
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Clipboard clipboard = toolkit.getSystemClipboard();
@@ -133,7 +145,6 @@ public class Machine {
 
         StringSelection emptySelection = new StringSelection("");
         clipboard.setContents(emptySelection, null);
-
 
         return cellValue;
     }

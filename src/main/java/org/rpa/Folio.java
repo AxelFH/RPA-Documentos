@@ -20,11 +20,11 @@ public class Folio {
         this.estatus = estatus;
     }
 
-    public Folio(String folio, String agencia) {
+    public Folio(String folio, String agencia, String estatus) {
         this.folio = folio;
         this.agencia = agencia;
         this.cliente = null;
-        this.estatus = null;
+        this.estatus = estatus;
     }
 
     @Override
